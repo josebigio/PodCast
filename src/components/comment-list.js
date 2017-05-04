@@ -4,9 +4,9 @@ import Comment from './comment'
 const CommentList = ({comments})=>{
 
     return(
-        <ul className="list-group">
-            {comments.map((comment)=>{
-                return <Comment comment={comment}/>
+        <ul className="list-group list">
+            {comments.map((comment,i)=>{
+                return <Comment key={i} comment={comment}/>
             })}
         </ul>
     );

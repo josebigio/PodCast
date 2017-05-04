@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
-
 import { fetchComments } from '../actions'
+
 import CommentList from '../components/comment-list';
+import Player from '../components/player';
+
+const URL = "http://hwcdn.libsyn.com/p/e/2/5/e25debae5db1b903/p950.mp3?c_id=15042400&expiration=1493539844&hwt=0b4f03e2ea463d3de0ec33b3e7782c89"
+
 
 class PodCast extends Component {
 
@@ -13,7 +16,7 @@ class PodCast extends Component {
     }
 
     componentWillMount() {
-        this.props.fetchComments('0yp7a7f3VGw');
+        this.props.fetchComments('GwbxhZJDS6U');
     }
 
     render() {
@@ -24,11 +27,8 @@ class PodCast extends Component {
         }
         return(
             <div>
-               <audio controls>
-                    {/*<source src="horse.ogg" type="audio/ogg"/>
-                    Your browser does not support the audio element.*/}
-                </audio>
                 <CommentList comments={comments}/>
+                <Player src={URL}/>
             </div>
         );
     }
