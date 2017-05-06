@@ -6,22 +6,22 @@ class Player extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            shown:false
+            shown:true
         }
     }
 
     handleOnMouseEnter() {
         console.log('onMouseEnter');
-        this.setState({
-            shown:true
-        });
+        // this.setState({
+        //     shown:true
+        // });
     }
 
     handleOnMouseLeave() {
         console.log('onMouseLeave');
-         this.setState({
-            shown:false
-        });
+        //  this.setState({
+        //     shown:false
+        // });
     }
 
     render() {
