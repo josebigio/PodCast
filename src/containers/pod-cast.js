@@ -23,7 +23,11 @@ class PodCast extends Component {
         console.log('PodCast',this.props.comments);
         const {comments}  = this.props;
         if(!comments) {
-            return <div>Loading...</div>
+            return (
+                <div className="loader-parent">
+                    <div className="loader"/>
+                </div>
+            );
         }
         return(
             <div>
