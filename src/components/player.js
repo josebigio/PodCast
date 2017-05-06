@@ -1,40 +1,50 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { initializeAudio, playAudio, pauseAudio } from '../actions'
 
 class Player extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            shown:true
+    }
+    
+    componentWillMount() {
+    }
+
+    onPlay() {
+        this.props.playAudio();
+    }
+
+    onPause() {
+        this.props.pauseAudio();
+    }
+
+    onRewind() {
+
+    }
+
+    onForward() {
+
+    }
+
+    renderPlayPauseButton() {
+        if (this.props.isPlaying) {
+            return <FontAwesome name='pause-circle player-button-clickable' size='3x' onClick={this.onPause.bind(this)} />
         }
-    }
-
-    handleOnMouseEnter() {
-        console.log('onMouseEnter');
-        // this.setState({
-        //     shown:true
-        // });
-    }
-
-    handleOnMouseLeave() {
-        console.log('onMouseLeave');
-        //  this.setState({
-        //     shown:false
-        // });
+        return <FontAwesome name='play-circle player-button-clickable' size='3x' onClick={this.onPlay.bind(this)} />
     }
 
     render() {
         const { src } = this.props;
-        const className = this.state.shown ? "player-shown" : "player-hidden";
         return (
-            <div className={`player slide-up flex-container ${className}`} onMouseEnter={this.handleOnMouseEnter.bind(this)} onMouseLeave={this.handleOnMouseLeave.bind(this)}>
-                <div className = "flex-container" style = {{width:"200px", justifyContent:"space-between", alignItems:"center"}}>
-                <FontAwesome name='backward player-button-clickable' size='2x'/>
-                <FontAwesome name='play-circle player-button-clickable' size='3x'/>
-                <FontAwesome name='forward player-button-clickable' size='2x'/>
-                {/*<audio src={src}>
-                </audio>*/}
+            <div className={`player slide-up flex-container`}>
+                <div className="flex-container" style={{ width: "200px", justifyContent: "space-between", alignItems: "center" }}>
+                    <FontAwesome name='backward player-button-clickable' size='2x' />
+                    {this.renderPlayPauseButton()}
+                    <FontAwesome name='forward player-button-clickable' size='2x' />
+                    <audio src={src} ref={(audio) => { this.props.initializeAudio(audio) }} />
                 </div>
             </div>
         );
@@ -51,5 +61,10 @@ const styles = {
         backgroundColor: "#ffaaff"
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        isPlaying: state.audio.isPlaying
+    }
+}
+export default connect(mapStateToProps,{initializeAudio, playAudio, pauseAudio})(Player);
 
-export default Player;
