@@ -12,13 +12,11 @@ const AudioReducer = (state = initialState, action) => {
         case Types.AUDIO_INITIALIZED:
             return {...state, duration:action.payload,ready:true}
         case Types.AUDIO_PLAY:
-            console.log('audio play');
            return {...state, isPlaying:true};
         case Types.AUDIO_PAUSE:
-            console.log('audio pause');
             return {...state, isPlaying:false};
         case Types.TICK:
-            console.log('tick');
+        case Types.AUDIO_DURATION_SET:
             return {...state, position:action.payload};
         default:
             return state;

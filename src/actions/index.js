@@ -4,6 +4,7 @@ import * as Api from '../api';
 let audio;
 let tickInterval;
 
+
 const tick = (dispatch) => {
     dispatch({
         type: Types.TICK,
@@ -30,21 +31,36 @@ const fetchComments = (videoId) => {
     }
 }
 
+const setAudioPosition = (position) => {
+    return (dispatch) => {
+        setTimeout(() => {
+            audio.currentTime = position;
+            dispatch({
+                type: Types.AUDIO_DURATION_SET,
+                payload: position
+            });
+        }, 5000);
+
+    }
+}
+
 const initializeAudio = (audioElement) => {
     audio = audioElement;
     return (dispatch) => {
-        setTimeout(() => {
+        audio.oncanplay = () => {
             dispatch({
                 type: Types.AUDIO_INITIALIZED,
                 payload: audio.duration
             })
-        }, 500)
+        }
     }
 
 }
 
 const playAudio = () => {
+    console.log('audioReadyState before play', audio.readyState);
     audio.play();
+    console.log('audioReadyState after play', audio.readyState);
     return (dispatch) => {
         tickInterval = setInterval(() => { tick(dispatch) }, 1000);
         dispatch({
@@ -63,4 +79,4 @@ const pauseAudio = () => {
     }
 }
 
-export { Types, fetchComments, initializeAudio, playAudio, pauseAudio }
+export { Types, fetchComments, initializeAudio, playAudio, pauseAudio, setAudioPosition }

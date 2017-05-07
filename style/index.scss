@@ -31,14 +31,14 @@ $white:#ffffff;
 .player-button-wrapper {
     display:flex;
     width: 400px;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 
 .player-button-clickable:hover {color: $white}
 
 .player-button-clickable:active {
-    transform: translateY(4px);
+    transform: translateY(2px);
 }
 
 .flex-container {
@@ -53,6 +53,10 @@ $white:#ffffff;
     border-radius: 50%;
     width: 50px;
     height: 50px;
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }       
 }
 .loader-parent {
     display:flex;
@@ -70,7 +74,3 @@ $white:#ffffff;
     }
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}       
