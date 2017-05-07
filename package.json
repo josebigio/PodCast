@@ -28,6 +28,7 @@
     "babel-preset-stage-1": "^6.1.18",
     "bootstrap": "^3.3.7",
     "css-loader": "^0.28.1",
+    "express": "^4.15.2",
     "lodash": "^3.10.1",
     "node-sass": "^4.5.2",
     "react": "^0.14.3",
