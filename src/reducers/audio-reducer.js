@@ -17,7 +17,7 @@ const AudioReducer = (state = initialState, action) => {
             return {...state, isPlaying:false};
         case Types.TICK:
         case Types.AUDIO_DURATION_SET:
-            return {...state, position:action.payload};
+            return {...state, position:parseInt(action.payload)};
         default:
             return state;
     }

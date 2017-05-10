@@ -20,7 +20,6 @@ class PodCast extends Component {
     }
 
     render() {
-        console.log('PodCast',this.props.comments);
         const {comments}  = this.props;
         if(!comments) {
             return (

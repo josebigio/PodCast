@@ -2,7 +2,6 @@ import React from 'react';
 import CountIcon from './count-icon'
 
 const Reply = ({snippet})=>{
-    console.log('reply',snippet);
     return (
         <li className="list-group-item" >
             <h6>{snippet.authorDisplayName}</h6>

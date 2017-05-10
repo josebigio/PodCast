@@ -3,27 +3,20 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk'; 
-import * as storage from 'redux-storage'
-import createEngine from 'redux-storage-engine-localstorage';
+import logger from 'redux-logger';
 import App from './containers/app';
 import reducers from './reducers';
 import * as Api from './api';
-import { setAudioPosition } from './actions';
+import {saveState, loadState} from './utils/local-storage';
 import '../style/index.scss';
 
-
-const reducer = storage.reducer(reducers);
-const engine = createEngine('my-save-key');
-const middleware = storage.createMiddleware(engine);
-const createStoreWithMiddleware = applyMiddleware(thunk,middleware)(createStore);
-const store = createStoreWithMiddleware(reducers);
-const load = storage.createLoader(engine);
-load(store)
-    .then((newState) =>{
-      console.log('lastPosition: ',newState.audio.position);
-      //setAudioPosition(newState.audio.position)(store.dispatch);
-    })
-    .catch(() => console.log('Failed to load previous state'));
+const createStoreWithMiddleware = applyMiddleware(logger,thunk)(createStore);
+const prevState = loadState();
+prevState.audio.isPlaying = false;
+const store = createStoreWithMiddleware(reducers,prevState);
+store.subscribe(()=>{
+  saveState(store.getState());
+});
 ReactDOM.render(
   <Provider store={store}>
     <App />

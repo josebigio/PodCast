@@ -12,7 +12,6 @@ class Comment extends Component {
     }
 
     handleClick() {
-        console.log('handleClick');
         this.setState({
             selected:!this.state.selected
         });
@@ -20,7 +19,6 @@ class Comment extends Component {
 
     render() {
         const { comment, showReplies } = this.props;
-        console.log('comment', showReplies);
         const { snippet, replies } = comment;
         const { likeCount, textDisplay, authorDisplayName } = snippet.topLevelComment.snippet;
         return <li className="list-group-item clickable" onClick={this.handleClick.bind(this)}>

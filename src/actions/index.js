@@ -13,7 +13,6 @@ const tick = (dispatch) => {
 }
 
 const fetchComments = (videoId) => {
-    console.log('fetchComments');
     return (dispatch) => {
         Api.fetchComments(videoId)
             .then((comments) => {
@@ -46,21 +45,25 @@ const setAudioPosition = (position) => {
 
 const initializeAudio = (audioElement) => {
     audio = audioElement;
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const prevPositon = getState().audio.position;
+        console.log('prevPosition', prevPositon);
         audio.oncanplay = () => {
-            dispatch({
-                type: Types.AUDIO_INITIALIZED,
-                payload: audio.duration
-            })
+            if (audio.currentTime != prevPositon) {
+                audio.currentTime = prevPositon;
+                dispatch({
+                    type: Types.AUDIO_INITIALIZED,
+                    payload: audio.duration
+                })
+            }
+
         }
     }
 
 }
 
 const playAudio = () => {
-    console.log('audioReadyState before play', audio.readyState);
     audio.play();
-    console.log('audioReadyState after play', audio.readyState);
     return (dispatch) => {
         tickInterval = setInterval(() => { tick(dispatch) }, 1000);
         dispatch({

@@ -12,11 +12,9 @@ class Player extends Component {
     }
 
     componentWillMount() {
-        console.log('componentWillMount', this.audio);
     }
 
     componentDidMount() {
-        console.log('componentDidMount', this.audio);
         this.props.initializeAudio(this.audio);
     }
 
@@ -37,7 +35,6 @@ class Player extends Component {
     }
 
     renderPlayPauseButton() {
-        console.log('isPlaying:', this.props.isPlaying);
         if (this.props.isPlaying) {
             return <FontAwesome name='pause-circle player-button-clickable' size='3x' onClick={this.onPause.bind(this)} />
         }
@@ -56,7 +53,6 @@ class Player extends Component {
 
     render() {
         const { src, audioPosition, duration, ready } = this.props;
-        console.log(audioPosition);
         return (
             <div className={"player"}>
                 <audio src={src} ref={(audio) => { this.audio = audio }} />
