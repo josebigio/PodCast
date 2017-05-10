@@ -32,14 +32,11 @@ const fetchComments = (videoId) => {
 
 const setAudioPosition = (position) => {
     return (dispatch) => {
-        setTimeout(() => {
-            audio.currentTime = position;
+       audio.currentTime = Math.min(Math.max(position,0),audio.duration);
             dispatch({
                 type: Types.AUDIO_DURATION_SET,
-                payload: position
+                payload: audio.currentTime
             });
-        }, 5000);
-
     }
 }
 
@@ -48,18 +45,18 @@ const initializeAudio = (audioElement) => {
     return (dispatch, getState) => {
         const prevPositon = getState().audio.position;
         console.log('prevPosition', prevPositon);
+        let initialized = false;
         audio.oncanplay = () => {
-            if (audio.currentTime != prevPositon) {
+            if (!initialized) {
+                initialized = true;
                 audio.currentTime = prevPositon;
                 dispatch({
                     type: Types.AUDIO_INITIALIZED,
                     payload: audio.duration
                 })
             }
-
         }
     }
-
 }
 
 const playAudio = () => {

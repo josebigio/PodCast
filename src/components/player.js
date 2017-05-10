@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { initializeAudio, playAudio, pauseAudio } from '../actions'
+import { initializeAudio, playAudio, pauseAudio, setAudioPosition } from '../actions'
 import Timer from './timer';
+
+const TIME_DELTA = 10;
 
 class Player extends Component {
 
@@ -27,11 +29,11 @@ class Player extends Component {
     }
 
     onRewind() {
-
+        this.props.setAudioPosition(this.props.audioPosition-TIME_DELTA);
     }
 
     onForward() {
-
+        this.props.setAudioPosition(this.props.audioPosition+TIME_DELTA);
     }
 
     renderPlayPauseButton() {
@@ -44,9 +46,9 @@ class Player extends Component {
     renderButtons(duration, src, audioPosition) {
         return (<div className="player-button-wrapper">
             <Timer time={duration} />
-            <FontAwesome name='backward player-button-clickable' size='2x' />
+            <FontAwesome name='backward player-button-clickable' onClick={this.onRewind.bind(this)} size='2x' />
             {this.renderPlayPauseButton()}
-            <FontAwesome name='forward player-button-clickable' size='2x' />
+            <FontAwesome name='forward player-button-clickable' onClick={this.onForward.bind(this)} size='2x' />
             <Timer time={audioPosition} />
         </div>);
     }
@@ -80,5 +82,5 @@ const mapStateToProps = (state) => {
         ready: state.audio.ready
     }
 }
-export default connect(mapStateToProps, { initializeAudio, playAudio, pauseAudio })(Player);
+export default connect(mapStateToProps, { initializeAudio, playAudio, pauseAudio, setAudioPosition })(Player);
 
