@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { initializeAudio, playAudio, pauseAudio, setAudioPosition } from '../actions'
 import Timer from './timer';
+import ProgressBar from './progress-bar';
 
 const TIME_DELTA = 10;
 
@@ -29,11 +30,11 @@ class Player extends Component {
     }
 
     onRewind() {
-        this.props.setAudioPosition(this.props.audioPosition-TIME_DELTA);
+        this.props.setAudioPosition(this.props.audioPosition - TIME_DELTA);
     }
 
     onForward() {
-        this.props.setAudioPosition(this.props.audioPosition+TIME_DELTA);
+        this.props.setAudioPosition(this.props.audioPosition + TIME_DELTA);
     }
 
     renderPlayPauseButton() {
@@ -56,9 +57,13 @@ class Player extends Component {
     render() {
         const { src, audioPosition, duration, ready } = this.props;
         return (
-            <div className={"player"}>
-                <audio src={src} ref={(audio) => { this.audio = audio }} />
-                {ready && this.renderButtons(duration,src,audioPosition)}
+            <div >
+               
+                <div className={"player"}>
+                     <ProgressBar progress={audioPosition/duration} />
+                    <audio src={src} ref={(audio) => { this.audio = audio }} />
+                    {ready && this.renderButtons(duration, src, audioPosition)}
+                </div>
             </div>
         );
     }
