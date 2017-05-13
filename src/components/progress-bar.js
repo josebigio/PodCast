@@ -11,23 +11,22 @@ class ProgressBar extends Component {
 
     componentWillReceiveProps(nextProps) {
         if(this.props.isDragging && !nextProps.isDragging) {
-            console.log('dragging stopped');
+            const audioPosition = this.props.duration * this.getAudioPercentage();
+            this.props.setAudioPosition(audioPosition);
+        }
+    }
+
+    getAudioPercentage() {
+        if(this.props.isDragging) {
+           return this.props.audioPosition/this.props.duration + (this.props.draggingOffset/window.outerWidth);
+        } else {
+            return this.props.audioPosition / this.props.duration;
         }
     }
 
     render() {
         let percentageString = "";
-        if(this.props.isDragging) {
-            // console.log('dragging %',(this.props.draggingOffset/screen.width));
-            percentageString = `${(this.props.audioPosition/this.props.duration + (this.props.draggingOffset/window.outerWidth))*100}%`
-        } else {
-            percentageString = `${this.props.audioPosition / this.props.duration * 100}%`
-        }
-        // console.log('width', screen.width);
-        // console.log('percentageString', percentageString);
-        console.log('windowLuterWidth',window.outerWidth);
-        console.log('windowInnerWidth',window.innerWidth);
-        console.log('width',screen.width);
+        percentageString = `${this.getAudioPercentage()*100}%`
         return (
             <div className="progress-bar">
                 <div style={{ height: "100%", backgroundColor: "#ffdd00", width: percentageString }} />

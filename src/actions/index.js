@@ -41,6 +41,7 @@ const setAudioPosition = (position) => {
 }
 
 const initializeAudio = (audioElement) => {
+    console.log('initializeAudio');
     audio = audioElement;
     return (dispatch, getState) => {
         const prevPositon = getState().audio.position;
@@ -85,6 +86,7 @@ const onScrubberDown = (e) => {
         payload: { x: e.clientX, y: e.clientY }
     }
 }
+
 
 const mouseMoving = (e) => {
     return {
