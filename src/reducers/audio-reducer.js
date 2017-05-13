@@ -4,7 +4,8 @@ const initialState = {
     isPlaying: false,
     position:0,
     duration:0,
-    ready:false
+    ready:false,
+    scrubberPress:false,
 }
 
 const AudioReducer = (state = initialState, action) => {

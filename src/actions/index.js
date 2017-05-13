@@ -3,7 +3,7 @@ import * as Api from '../api';
 
 let audio;
 let tickInterval;
-
+let isDragging = false;
 
 const tick = (dispatch) => {
     dispatch({
@@ -32,11 +32,11 @@ const fetchComments = (videoId) => {
 
 const setAudioPosition = (position) => {
     return (dispatch) => {
-       audio.currentTime = Math.min(Math.max(position,0),audio.duration);
-            dispatch({
-                type: Types.AUDIO_DURATION_SET,
-                payload: audio.currentTime
-            });
+        audio.currentTime = Math.min(Math.max(position, 0), audio.duration);
+        dispatch({
+            type: Types.AUDIO_DURATION_SET,
+            payload: audio.currentTime
+        });
     }
 }
 
@@ -79,4 +79,29 @@ const pauseAudio = () => {
     }
 }
 
-export { Types, fetchComments, initializeAudio, playAudio, pauseAudio, setAudioPosition }
+const onScrubberDown = (e) => {
+    return {
+        type: Types.SCRUBBER_DOWN,
+        payload: { x: e.clientX, y: e.clientY }
+    }
+}
+
+const mouseMoving = (e) => {
+    return {
+        type: Types.MOUSE_MOVE,
+        payload: { x: e.clientX, y: e.clientY }
+    }
+}
+
+
+const onMouseUp = (e) => {
+    return (dispatch, getState) => {
+
+        dispatch({
+            type: Types.MOUSE_UP,
+            payload: { x: e.clientX, y: e.clientY }
+        });
+    }
+}
+
+export { Types, fetchComments, initializeAudio, playAudio, pauseAudio, setAudioPosition, mouseMoving, onMouseUp, onScrubberDown }

@@ -60,7 +60,7 @@ class Player extends Component {
             <div >
                
                 <div className={"player"}>
-                     <ProgressBar progress={audioPosition/duration} />
+                     <ProgressBar/>
                     <audio src={src} ref={(audio) => { this.audio = audio }} />
                     {ready && this.renderButtons(duration, src, audioPosition)}
                 </div>
