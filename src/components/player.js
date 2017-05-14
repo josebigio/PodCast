@@ -46,11 +46,11 @@ class Player extends Component {
 
     renderButtons(duration, src, audioPosition) {
         return (<div className="player-button-wrapper">
-            <Timer time={duration} />
+            <Timer time={audioPosition} />
             <FontAwesome name='backward player-button-clickable' onClick={this.onRewind.bind(this)} size='2x' />
             {this.renderPlayPauseButton()}
             <FontAwesome name='forward player-button-clickable' onClick={this.onForward.bind(this)} size='2x' />
-            <Timer time={audioPosition} />
+            <Timer time={duration} />
         </div>);
     }
 
@@ -58,9 +58,8 @@ class Player extends Component {
         const { src, audioPosition, duration, ready } = this.props;
         return (
             <div >
-               
                 <div className={"player"}>
-                     <ProgressBar/>
+                    <ProgressBar />
                     <audio src={src} ref={(audio) => { this.audio = audio }} />
                     {ready && this.renderButtons(duration, src, audioPosition)}
                 </div>
