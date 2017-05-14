@@ -27,7 +27,12 @@ store.subscribe(() => {
   saveState(store.getState());
 });
 document.onmousemove = ((e) => { store.dispatch(mouseMoving(e)) });
+document.ontouchmove = ((e) => {
+  e.preventDefault();
+   store.dispatch(mouseMoving(e)) 
+  });
 document.onmouseup = (e) => { store.dispatch(onMouseUp(e)) };
+document.ontouchend = (e) => { store.dispatch(onMouseUp(e)) };
 ReactDOM.render(
   <Provider store={store}>
     <App />

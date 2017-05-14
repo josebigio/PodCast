@@ -32,6 +32,7 @@ class ProgressBar extends Component {
                 <div style={{ height: "100%", backgroundColor: "#ffdd00", width: percentageString }} />
                 <div className="progress-scroller"
                     onMouseDown={(e) => { this.props.onScrubberDown(e) }}
+                    onTouchStart={(e) => { this.props.onScrubberDown(e) }}
                     style={{ left: percentageString, marginLeft: "-10px", backgroundColor: "#ffdd00" }} />
             </div>
         );

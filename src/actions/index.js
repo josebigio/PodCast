@@ -83,7 +83,7 @@ const pauseAudio = () => {
 const onScrubberDown = (e) => {
     return {
         type: Types.SCRUBBER_DOWN,
-        payload: { x: e.clientX, y: e.clientY }
+        payload: getXYPayload(e)
     }
 }
 
@@ -91,19 +91,30 @@ const onScrubberDown = (e) => {
 const mouseMoving = (e) => {
     return {
         type: Types.MOUSE_MOVE,
-        payload: { x: e.clientX, y: e.clientY }
+        payload: getXYPayload(e)
     }
 }
 
 
 const onMouseUp = (e) => {
     return (dispatch, getState) => {
-
         dispatch({
             type: Types.MOUSE_UP,
-            payload: { x: e.clientX, y: e.clientY }
+            payload: getXYPayload(e)
         });
     }
+}
+
+const isMobile = ()=>{
+    const result =  (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent));
+    return result;
+}
+
+const getXYPayload = (e) => {
+    if(isMobile()) {
+        return {x:e.touches[0].clientX,y:e.touches[0].clientY}
+    }
+    return { x: e.clientX, y: e.clientY };
 }
 
 export { Types, fetchComments, initializeAudio, playAudio, pauseAudio, setAudioPosition, mouseMoving, onMouseUp, onScrubberDown }
