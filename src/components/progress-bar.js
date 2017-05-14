@@ -10,15 +10,15 @@ class ProgressBar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(this.props.isDragging && !nextProps.isDragging) {
+        if (this.props.isDragging && !nextProps.isDragging) {
             const audioPosition = this.props.duration * this.getAudioPercentage();
             this.props.setAudioPosition(audioPosition);
         }
     }
 
     getAudioPercentage() {
-        if(this.props.isDragging) {
-           return this.props.audioPosition/this.props.duration + (this.props.draggingOffset/window.outerWidth);
+        if (this.props.isDragging) {
+            return this.props.audioPosition / this.props.duration + (this.props.draggingOffset / window.outerWidth);
         } else {
             return this.props.audioPosition / this.props.duration;
         }
@@ -26,17 +26,17 @@ class ProgressBar extends Component {
 
     render() {
         let percentageString = "";
-        percentageString = `${this.getAudioPercentage()*100}%`
+        percentageString = `${this.getAudioPercentage() * 100}%`
         return (
             <div className="progress-bar">
                 <div style={{ height: "100%", backgroundColor: "#ffdd00", width: percentageString }} />
                 <div className="progress-scroller"
-                    onMouseDown={(e)=>{this.props.onScrubberDown(e)}}
+                    onMouseDown={(e) => { this.props.onScrubberDown(e) }}
                     onTouchStart={(e) => { this.props.onScrubberDown(e) }}
                     onTouchMove={(e) => { this.props.mouseMoving(e) }}
                     onTouchEnd={(e) => { this.props.onMouseUp(e) }}
                     style={{ left: percentageString, marginLeft: "-10px", backgroundColor: "#ffdd00" }} />
-            </div> 
+            </div>
         );
     }
 
@@ -47,9 +47,9 @@ const mapStateToProps = (state) => {
     return {
         audioPosition: state.audio.position,
         duration: state.audio.duration,
-        isDragging:state.progress.isDragging,
-        draggingOffset:state.progress.draggingOffset
+        isDragging: state.progress.isDragging,
+        draggingOffset: state.progress.draggingOffset
     }
 }
 
-export default connect(mapStateToProps, { playAudio, pauseAudio, setAudioPosition, onScrubberDown, onMouseUp,mouseMoving })(ProgressBar);
+export default connect(mapStateToProps, { playAudio, pauseAudio, setAudioPosition, onScrubberDown, onMouseUp, mouseMoving })(ProgressBar);

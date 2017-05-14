@@ -45,13 +45,14 @@ class Player extends Component {
     }
 
     renderButtons(duration, src, audioPosition) {
-        return (<div className="player-button-wrapper">
-            <Timer time={audioPosition} />
-            <FontAwesome name='backward player-button-clickable' onClick={this.onRewind.bind(this)} size='2x' />
-            {this.renderPlayPauseButton()}
-            <FontAwesome name='forward player-button-clickable' onClick={this.onForward.bind(this)} size='2x' />
-            <Timer time={duration} />
-        </div>);
+        return (
+            <div className="player-button-wrapper">
+                <Timer time={audioPosition} />
+                <FontAwesome name='backward player-button-clickable' onClick={this.onRewind.bind(this)} size='2x' />
+                {this.renderPlayPauseButton()}
+                <FontAwesome name='forward player-button-clickable' onClick={this.onForward.bind(this)} size='2x' />
+                <Timer time={duration} />
+            </div>);
     }
 
     render() {
@@ -79,9 +80,15 @@ const styles = {
     }
 }
 const mapStateToProps = (state) => {
+    let audioPosition = state.audio.position;
+    if(state.progress.isDragging) {
+        audioPosition+=(state.progress.draggingOffset/window.outerWidth*state.audio.duration);
+    }
     return {
         isPlaying: state.audio.isPlaying,
-        audioPosition: state.audio.position,
+        audioPosition: audioPosition,
+        isDragging: state.progress.isDragging,
+        draggingOffset: state.progress.draggingOffset,
         duration: state.audio.duration,
         ready: state.audio.ready
     }
