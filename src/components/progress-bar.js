@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { initializeAudio, playAudio, pauseAudio, setAudioPosition, onScrubberDown } from '../actions'
+import { initializeAudio, playAudio, pauseAudio, setAudioPosition, onScrubberDown, mouseMoving, onMouseUp } from '../actions'
 
 class ProgressBar extends Component {
 
@@ -31,10 +31,12 @@ class ProgressBar extends Component {
             <div className="progress-bar">
                 <div style={{ height: "100%", backgroundColor: "#ffdd00", width: percentageString }} />
                 <div className="progress-scroller"
-                    onMouseDown={(e) => { this.props.onScrubberDown(e) }}
+                    onMouseDown={(e)=>{this.props.onScrubberDown(e)}}
                     onTouchStart={(e) => { this.props.onScrubberDown(e) }}
+                    onTouchMove={(e) => { this.props.mouseMoving(e) }}
+                    onTouchEnd={(e) => { this.props.onMouseUp(e) }}
                     style={{ left: percentageString, marginLeft: "-10px", backgroundColor: "#ffdd00" }} />
-            </div>
+            </div> 
         );
     }
 
@@ -50,4 +52,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { playAudio, pauseAudio, setAudioPosition, onScrubberDown })(ProgressBar);
+export default connect(mapStateToProps, { playAudio, pauseAudio, setAudioPosition, onScrubberDown, onMouseUp,mouseMoving })(ProgressBar);

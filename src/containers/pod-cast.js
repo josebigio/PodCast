@@ -28,7 +28,8 @@ class PodCast extends Component {
             );
         }
         return(
-            <div>
+            <div 
+                >
                 <CommentList comments={comments}/>
                 <Player src={URL}/>
             </div>

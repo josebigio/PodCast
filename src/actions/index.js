@@ -101,14 +101,19 @@ const onMouseUp = (e) => {
     return (dispatch, getState) => {
         dispatch({
             type: Types.MOUSE_UP,
-            payload: getXYPayload(e)
         });
     }
 }
 
 const getXYPayload = (e) => {
     if(isMobile()) {
-        return {x:e.touches[0].clientX,y:e.touches[0].clientY}
+        try {
+            return {x:e.touches[0].clientX,y:e.touches[0].clientY}
+        }
+        catch(error) {
+            console.error('error getting payload',error,e);
+            return {x:0,y:0}
+        }
     }
     return { x: e.clientX, y: e.clientY };
 }
