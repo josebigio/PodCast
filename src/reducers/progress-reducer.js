@@ -19,10 +19,7 @@ const ProgressReducer = (state = initialState ,action) =>{
             return {...state,isDragging:false,draggingOffset:0}
         case Types.MOUSE_MOVE:
             if(state.isDragging) {
-                // console.log('initialMouseX',initialMouseX);
-                // console.log('mousePos:',action.payload.x);
                 const newOffset = (action.payload.x-initialMouseX);
-                // console.log('newOffset',newOffset);
                 return {...state,draggingOffset:newOffset}
             }
         default:

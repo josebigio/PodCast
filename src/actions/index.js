@@ -1,5 +1,6 @@
 import * as Types from './action-types';
 import * as Api from '../api';
+import {isMobile} from '../utils';
 
 let audio;
 let tickInterval;
@@ -103,11 +104,6 @@ const onMouseUp = (e) => {
             payload: getXYPayload(e)
         });
     }
-}
-
-const isMobile = ()=>{
-    const result =  (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent));
-    return result;
 }
 
 const getXYPayload = (e) => {
