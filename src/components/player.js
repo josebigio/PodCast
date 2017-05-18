@@ -14,12 +14,20 @@ class Player extends Component {
         super(props);
     }
 
-    componentWillMount() {
+    componentDidMount() {
+        console.log('componentWillMount INITIALIZING AUDIO');
+        this.props.initializeAudio(this.audio)
+
     }
 
-    componentDidMount() {
-        this.props.initializeAudio(this.audio);
+    componentWillReceiveProps(nextProps) {
+        console.log('componentWillReceiveProps');
+        if (this.props.audioSrc !== nextProps.audioSrc) {
+            console.log('componentWillReceiveProps INITIALIZING AUDIO');
+            this.props.initializeAudio(this.audio)
+        }
     }
+
 
     onPlay() {
         this.props.playAudio();
@@ -61,7 +69,7 @@ class Player extends Component {
             <div >
                 <div className={"player"}>
                     <ProgressBar />
-                    <audio src={src} ref={(audio) => { this.audio = audio }} />
+                    <audio src={this.props.audioSrc} ref={(audio) => { this.audio = audio }} />
                     {ready && this.renderButtons(duration, src, audioPosition)}
                 </div>
             </div>
@@ -81,8 +89,8 @@ const styles = {
 }
 const mapStateToProps = (state) => {
     let audioPosition = state.audio.position;
-    if(state.progress.isDragging) {
-        audioPosition+=(state.progress.draggingOffset/window.outerWidth*state.audio.duration);
+    if (state.progress.isDragging) {
+        audioPosition += (state.progress.draggingOffset / window.outerWidth * state.audio.duration);
     }
     return {
         isPlaying: state.audio.isPlaying,
@@ -90,7 +98,8 @@ const mapStateToProps = (state) => {
         isDragging: state.progress.isDragging,
         draggingOffset: state.progress.draggingOffset,
         duration: state.audio.duration,
-        ready: state.audio.ready
+        ready: state.audio.ready,
+        audioSrc: state.audio.audioSrc
     }
 }
 export default connect(mapStateToProps, { initializeAudio, playAudio, pauseAudio, setAudioPosition })(Player);

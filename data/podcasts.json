@@ -1,0 +1,22 @@
+{
+    "podcasts": [
+        {
+            "name": "Mick West 959",
+            "episode_number":959,
+            "audio":"http://hwcdn.libsyn.com/p/e/3/1/e31848bc61150ef6/p958.mp3?c_id=15228877&expiration=1494716962&hwt=e40973e285752ee5bb72aae58d93035c",
+            "youtube_id":"kvitm0bMHyA"
+        },
+        {
+            "name": "Jordan Peterson",
+            "episode_number":958,
+            "audio":"http://hwcdn.libsyn.com/p/e/3/1/e31848bc61150ef6/p958.mp3?c_id=15228877&expiration=1494716962&hwt=e40973e285752ee5bb72aae58d93035c",
+            "youtube_id":"USg3NR76XpQ"
+        },
+        {
+            "name": "Cameron Hanes",
+            "episode_number":957,
+            "audio":"http://hwcdn.libsyn.com/p/e/3/1/e31848bc61150ef6/p958.mp3?c_id=15228877&expiration=1494716962&hwt=e40973e285752ee5bb72aae58d93035c",
+            "youtube_id":"USg3NR76XpQ"
+        }
+    ]
+}

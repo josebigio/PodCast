@@ -1,6 +1,7 @@
 import * as Types from './action-types';
 import * as Api from '../api';
-import {isMobile} from '../utils';
+import { isMobile } from '../utils';
+import { searchPodCast, onSearchResultClicked } from './search';
 
 let audio;
 let tickInterval;
@@ -31,6 +32,19 @@ const fetchComments = (videoId) => {
     }
 }
 
+const changeAudio = (searchResult) => {
+    return (dispatch) => {
+        const episodeNumber = searchResult.title.match(/\d+/)[0];
+        console.log('episodeNumber',episodeNumber);
+        dispatch({
+            type:Types.AUDIO_SRC_SET,
+            payload:"http://traffic.libsyn.com/joeroganexp/p" + episodeNumber + ".mp3"
+        })
+    }
+
+}
+
+
 const setAudioPosition = (position) => {
     return (dispatch) => {
         audio.currentTime = Math.min(Math.max(position, 0), audio.duration);
@@ -42,7 +56,7 @@ const setAudioPosition = (position) => {
 }
 
 const initializeAudio = (audioElement) => {
-    console.log('initializeAudio');
+    console.log('initializeAudio',audioElement);
     audio = audioElement;
     return (dispatch, getState) => {
         const prevPositon = getState().audio.position;
@@ -106,16 +120,16 @@ const onMouseUp = (e) => {
 }
 
 const getXYPayload = (e) => {
-    if(isMobile()) {
+    if (isMobile()) {
         try {
-            return {x:e.touches[0].clientX,y:e.touches[0].clientY}
+            return { x: e.touches[0].clientX, y: e.touches[0].clientY }
         }
-        catch(error) {
-            console.error('error getting payload',error,e);
-            return {x:0,y:0}
+        catch (error) {
+            console.error('error getting payload', error, e);
+            return { x: 0, y: 0 }
         }
     }
     return { x: e.clientX, y: e.clientY };
 }
 
-export { Types, fetchComments, initializeAudio, playAudio, pauseAudio, setAudioPosition, mouseMoving, onMouseUp, onScrubberDown }
+export { Types, fetchComments, changeAudio, searchPodCast, onSearchResultClicked, initializeAudio, playAudio, pauseAudio, setAudioPosition, mouseMoving, onMouseUp, onScrubberDown }

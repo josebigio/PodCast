@@ -2,7 +2,6 @@ import { mouseMoving, onMouseUp, Types } from '../actions'
 import { isMobile } from './index';
 let document;
 
-console.log('dom-listener', mouseMoving, onMouseUp);
 const initListeners = (documentParam, store) => {
     document = documentParam;
     if (isMobile()) {
