@@ -15,22 +15,25 @@ class SearchBar extends Component {
     }
 
     handleSearchResultClicked(searchResult) {
-        console.log('handleSearchResultClicked',searchResult);
+        console.log('handleSearchResultClicked', searchResult);
         this.props.onSearchResultClicked(searchResult);
     }
 
     render() {
         return (
             <div className="search-bar">
-                <input type="search"
-                    className="form-control"
-                    placeholder="Search for a JRE podcast"
-                    value={this.props.inputValue}
-                    onChange={this.handleInputChange.bind(this)} />
-                {this.props.inputValue.length > 0 &&
-                    <SearchResultList
-                        resultList={this.props.searchResultList}
-                        onResultClicked={this.handleSearchResultClicked.bind(this)} />}
+                <div className="search-input-section">
+                    <input type="search"
+                        className="form-control search-input"
+                        placeholder="Search for a JRE podcast"
+                        value={this.props.inputValue}
+                        onChange={this.handleInputChange.bind(this)} />
+
+                    {this.props.inputValue.length > 0 &&
+                        <SearchResultList
+                            resultList={this.props.searchResultList}
+                            onResultClicked={this.handleSearchResultClicked.bind(this)} />}
+                </div>
             </div>
         )
     }

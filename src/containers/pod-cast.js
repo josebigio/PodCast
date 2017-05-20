@@ -13,10 +13,6 @@ class PodCast extends Component {
         super(props);
     }
 
-    componentWillMount() {
-        this.props.fetchComments('USg3NR76XpQ');        
-    }
-
     render() {
         const {comments}  = this.props;
         return(

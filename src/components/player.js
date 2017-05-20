@@ -15,15 +15,12 @@ class Player extends Component {
     }
 
     componentDidMount() {
-        console.log('componentWillMount INITIALIZING AUDIO');
         this.props.initializeAudio(this.audio)
 
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps');
         if (this.props.audioSrc !== nextProps.audioSrc) {
-            console.log('componentWillReceiveProps INITIALIZING AUDIO');
             this.props.initializeAudio(this.audio)
         }
     }
