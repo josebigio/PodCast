@@ -19,9 +19,15 @@ class SearchBar extends Component {
         this.props.onSearchResultClicked(searchResult);
     }
 
+    getApproval(ratings) {
+        return (parseInt(ratings.likeCount)/(parseInt(ratings.likeCount) + parseInt(ratings.dislikeCount))*100).toFixed(2);
+    }
+
     render() {
         return (
             <div className="search-bar">
+                <h6 style={{textAlign:"center"}}>{this.props.currentEpisode}</h6>
+                <p1>{this.props.ratings && this.getApproval(this.props.ratings) + "%"}</p1>
                 <div className="search-input-section">
                     <input type="search"
                         className="form-control search-input"
@@ -43,7 +49,9 @@ class SearchBar extends Component {
 const mapStateToProps = (state) => {
     return {
         inputValue: state.search.searchInputVal,
-        searchResultList: state.search.searchResultList
+        searchResultList: state.search.searchResultList,
+        currentEpisode: state.search.currentEpisode,
+        ratings: state.search.ratings,
     }
 }
 

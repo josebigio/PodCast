@@ -3,6 +3,8 @@ import {Types} from '../actions';
 const initialState = {
     searchInputVal: "",
     searchResultList:[],
+    currentEpisode: "",
+    ratings: undefined,
 }
 
 const SearchReducer = (state = initialState ,action) =>{
@@ -12,7 +14,10 @@ const SearchReducer = (state = initialState ,action) =>{
         case Types.PODCAST_SEARCH_RECIEVED_SUCCESS:
             return {...state,searchResultList: action.payload}
         case Types.SEARCH_RESULT_CLICKED:
-            return {...state,searchInputVal:""}
+            return {...state,searchInputVal:"", currentEpisode:action.payload.title}
+        case Types.PODCAST_RATINGS_RECIEVED: {
+            return {...state,ratings:action.payload}
+        }
         default:
             return state;
     }

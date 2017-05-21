@@ -26,6 +26,27 @@ const searchPodCast = (query) => {
     }
 }
 
+const fetchRatings = (searchResult) => {
+    return (dispatch) => {
+        Api.searchVideoInfo(searchResult.youtubeId)
+            .then((result) => {
+                console.log('fetchRatings',result);
+                dispatch({
+                    type: Types.PODCAST_RATINGS_RECIEVED,
+                    payload:result
+                });
+            })
+            .catch((error) => {
+                dispatch({
+                    type: Types.PODCAST_RATINGS_ERROR,
+                    payload: error
+                });
+            });
+
+
+    }
+}
+
 const onSearchResultClicked = (searchResult) => {
     return (dispatch) => {
         dispatch({
@@ -34,6 +55,7 @@ const onSearchResultClicked = (searchResult) => {
         })
         fetchComments(searchResult.youtubeId)(dispatch);
         changeAudio(searchResult)(dispatch);
+        fetchRatings(searchResult)(dispatch);
     }
 }
 
