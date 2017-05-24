@@ -17,11 +17,11 @@ const fetchComments = (videoId) => {
         })
 }
 
-const searchPodCast = (query)=> {
-    const request = `${VIDEO_SEARCH_URL}?key=${API_KEY}&channelId=${JOE_ROGAN_ID}&part=snippet&q=${query}`;
-    searchVideoInfo("USg3NR76XpQ");
+const searchPodCast = (query, maxResults = 5)=> {
+    const request = `${VIDEO_SEARCH_URL}?key=${API_KEY}&channelId=${JOE_ROGAN_ID}&part=snippet&q=${query}&order=date&maxResults=${maxResults}`;
     return axios.get(request)
         .then((responce) => {
+            console.log('VIDEO_SEARCH_URL',responce);
             return ( responce.data.items.filter((item)=>{
                 return item.snippet.title.startsWith("Joe Rogan Experience #")
             }).
@@ -30,7 +30,6 @@ const searchPodCast = (query)=> {
                     title:item.snippet.title,
                     youtubeId:item.id.videoId
                 }
-                console.log('api result',result);
                 return result;
 
             }));
@@ -45,7 +44,6 @@ const searchVideoInfo = (videoId) => {
     const request = `${VIDEO_INFO_URL}?key=${API_KEY}&part=statistics&id=${videoId}`;
     return axios.get(request)
         .then((responce) => {
-            console.log('searchVideoInfo',responce);
             if(responce.data.items) {
                 return responce.data.items[0].statistics;
             }

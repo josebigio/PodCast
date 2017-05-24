@@ -1,7 +1,7 @@
 import * as Types from './action-types';
 import * as Api from '../api';
 import { isMobile } from '../utils';
-import { searchPodCast, onSearchResultClicked } from './search';
+import { searchPodCast, onSearchResultClicked, handleSearchAll, onSearchFocus, onSearchOnBlur, mouseLeft, mouseEntered } from './search';
 
 let audio;
 let tickInterval;
@@ -132,4 +132,4 @@ const getXYPayload = (e) => {
     return { x: e.clientX, y: e.clientY };
 }
 
-export { Types, fetchComments, changeAudio, searchPodCast, onSearchResultClicked, initializeAudio, playAudio, pauseAudio, setAudioPosition, mouseMoving, onMouseUp, onScrubberDown }
+export { Types, fetchComments, changeAudio, searchPodCast, onSearchResultClicked, handleSearchAll, initializeAudio, playAudio, pauseAudio, setAudioPosition, mouseMoving, onMouseUp, onScrubberDown,  onSearchFocus, onSearchOnBlur, mouseLeft, mouseEntered  }

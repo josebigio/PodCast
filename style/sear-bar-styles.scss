@@ -27,11 +27,12 @@
 .search-input-wrapper {
     display: flex;
     align-items:center;
+    justify-content: flex-end;
 }
 
 .search-icon {
-    position:relative;
-    left:-30px;
+    position:absolute;
+    margin-left:-30px;
 }
 
 .search-result-list {
@@ -43,6 +44,11 @@
     p{
         color:#000;
     }
+}
+
+.search-result-list ul {
+    max-height: 50vh;
+    overflow:auto;
 }
 
 .search-result-list ul {

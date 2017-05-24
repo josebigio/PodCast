@@ -2,13 +2,73 @@ import * as Types from './action-types';
 import * as Api from '../api';
 import {fetchComments, changeAudio} from './index';
 
-const searchPodCast = (query) => {
+export const searchPodCast = (query, maxResults=5) => {
     return (dispatch) => {
         dispatch({
             type:Types.SEARCH_VALUE_CHANGED,
             payload:query
         });
-        Api.searchPodCast(query)
+        dispatch({
+            type:Types.PODCAST_SEARCH_STARTED,
+        });
+        if(query && query.length == 0) {
+            query = "Joe Rogan Experience";
+        }
+        Api.searchPodCast(query,maxResults)
+            .then((result) => {
+                dispatch({
+                    type: Types.PODCAST_SEARCH_RECIEVED_SUCCESS,
+                    payload:result
+                });
+            })
+            .catch((error) => {
+                dispatch({
+                    type: Types.PODCAST_SEARCH_RECIEVED_FAILURE,
+                    payload: error
+                });
+            });
+
+            
+    }
+}
+
+export const onSearchFocus = (inputValue)=>{
+    return (dispatch) => {
+        dispatch({
+            type: Types.SEARCH_FOCUSED
+        });
+        handleSearchAll()(dispatch);
+    }
+    
+}
+
+export const onSearchOnBlur = (inputValue)=>{
+    return (dispatch) => {
+        dispatch({
+            type: Types.SEARCH_UNFOCUS
+        });
+    }
+    
+}
+
+export const mouseLeft = ()=>{
+    return {
+        type: Types.SEARCH_MOUSE_LEFT
+    }
+}
+
+export const mouseEntered = ()=>{
+    return {
+        type: Types.SEARCH_MOUSE_ENTERED
+    }
+}
+
+export const handleSearchAll = () => {
+    return (dispatch) => {
+        dispatch({
+            type:Types.PODCAST_SEARCH_STARTED,
+        });
+        Api.searchPodCast("Joe Rogan Experience",50)
             .then((result) => {
                 dispatch({
                     type: Types.PODCAST_SEARCH_RECIEVED_SUCCESS,
@@ -26,11 +86,10 @@ const searchPodCast = (query) => {
     }
 }
 
-const fetchRatings = (searchResult) => {
+export const fetchRatings = (searchResult) => {
     return (dispatch) => {
         Api.searchVideoInfo(searchResult.youtubeId)
             .then((result) => {
-                console.log('fetchRatings',result);
                 dispatch({
                     type: Types.PODCAST_RATINGS_RECIEVED,
                     payload:result
@@ -47,7 +106,7 @@ const fetchRatings = (searchResult) => {
     }
 }
 
-const onSearchResultClicked = (searchResult) => {
+export const onSearchResultClicked = (searchResult) => {
     return (dispatch) => {
         dispatch({
             type: Types.SEARCH_RESULT_CLICKED,
@@ -59,4 +118,3 @@ const onSearchResultClicked = (searchResult) => {
     }
 }
 
-export {searchPodCast, onSearchResultClicked}
