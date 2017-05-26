@@ -17,7 +17,7 @@ import '../style/index.scss';
 const logger = createLogger({
   predicate: (getState, action) => (action.type !== Types.TICK && action.type !==Types.MOUSE_MOVE)
 });
-const createStoreWithMiddleware = applyMiddleware(logger, thunk)(createStore);
+const createStoreWithMiddleware = applyMiddleware( thunk)(createStore);
 const prevState = loadState();
 if (prevState) {
   prevState.audio.isPlaying = false;

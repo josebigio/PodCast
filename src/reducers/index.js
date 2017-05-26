@@ -4,6 +4,7 @@ import AudioReducer from './audio-reducer';
 import WindowReducer from './window-reducer';
 import ProgressReducer from './progress-reducer';
 import SearchReducer from './search-reducer';
+import NavigationReducer from './navigation-reducer';
 
 
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   window: WindowReducer,
   progress:ProgressReducer,
   search:SearchReducer,
+  navigation:NavigationReducer,
 });
 
 export default rootReducer;

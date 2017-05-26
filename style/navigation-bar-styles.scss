@@ -1,0 +1,23 @@
+.navigation-bar {
+    min-height:5vh;
+    display:flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.selected {
+    text-decoration:underline #10aaff;
+    font-weight: bold;
+    color:#000;
+}
+
+.selected.navigation-item {
+    color:#000;
+}
+
+.navigation-item {
+    margin-right:10px;
+    margin-left: 10px;
+    color: 	#A9A9A9;
+    cursor:pointer;
+}

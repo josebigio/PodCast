@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import { bindActionCreators } from 'redux';
+import _ from 'lodash';
 import { searchPodCast, onSearchResultClicked, handleSearchAll, onSearchFocus, onSearchOnBlur, mouseEntered, mouseLeft } from '../actions'
 import SearchResultList from './search-result-list';
+import NavigationBar from './navigation-bar';
 
 class SearchBar extends Component {
 
@@ -40,7 +42,6 @@ class SearchBar extends Component {
     }
 
     render() {
-        console.log('IS LOADING', this.props.searchLoading);
         return (
             <div className="search-bar">
                 <h6 style={{ textAlign: "center" }}>{this.props.currentEpisode}</h6>
@@ -55,7 +56,7 @@ class SearchBar extends Component {
                             value={this.props.inputValue}
                             onChange={this.handleInputChange.bind(this)} >
                         </input>
-                            <FontAwesome name={`spinner ${this.props.searchLoading && 'fa-spin'}`} className="search-icon"/>
+                        <FontAwesome name={`spinner ${this.props.searchLoading && 'fa-spin'}`} className="search-icon" />
                     </div>
 
                     {(this.props.focused || this.props.mouseInside) &&
@@ -64,6 +65,7 @@ class SearchBar extends Component {
                             onMouseLeave={this.handleMouseLeave.bind(this)}
                             resultList={this.props.searchResultList}
                             onResultClicked={this.handleSearchResultClicked.bind(this)} />}
+                    <NavigationBar />
                 </div>
             </div>
         )

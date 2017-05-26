@@ -2,9 +2,10 @@ $transparentGrey:#808080;
 $progressColor:#000;
 $white:#ffffff;
 $playerHeight:10vh;
-$searchBarHeight:15vh;
+$searchBarHeight:25vh;
 
 @import 'sear-bar-styles';
+@import 'navigation-bar-styles';
 
 .clickable:hover {
     cursor:pointer
