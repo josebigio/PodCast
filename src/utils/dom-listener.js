@@ -1,14 +1,13 @@
-import { mouseMoving, onMouseUp, Types } from '../actions'
+import { mouseMoving, onMouseUp, Types, window as w } from '../actions'
 import { isMobile } from './index';
-let document;
 
-const initListeners = (documentParam, store) => {
-    document = documentParam;
-    if (isMobile()) {
-        return;
+const initListeners = (store) => {
+    window.onfocus = (e) => { store.dispatch(w.onWindowFocused())}
+    window.onblur = (e) => { store.dispatch(w.onWindowBlur())}
+    if (!isMobile()) {
+        document.onmousemove = ((e) => { store.dispatch(mouseMoving(e)) });
+        document.onmouseup = (e) => { store.dispatch(onMouseUp(e)) };
     }
-    document.onmousemove = ((e) => { store.dispatch(mouseMoving(e)) });
-    document.onmouseup = (e) => { store.dispatch(onMouseUp(e)) };
 }
 
 export { initListeners }

@@ -22,7 +22,6 @@ class NavigationBar extends Component {
 
 }
 const mapStateToProps = (state) => {
-    console.log('navigation state',state.navigation);
     return {
         selection:state.navigation.selection
     }

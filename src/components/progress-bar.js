@@ -29,7 +29,7 @@ class ProgressBar extends Component {
         percentageString = `${this.getAudioPercentage() * 100}%`
         return (
             <div className="progress-bar">
-                <div style={{ height: "100%", backgroundColor: "#ffdd00", width: percentageString }} />
+                <div style={{ height: "100%", width: percentageString, backgroundColor: "#ffdd00" }} />
                 <div className="progress-scroller"
                     onMouseDown={(e) => { this.props.onScrubberDown(e) }}
                     onTouchStart={(e) => { this.props.onScrubberDown(e) }}
@@ -48,7 +48,9 @@ const mapStateToProps = (state) => {
         audioPosition: state.audio.position,
         duration: state.audio.duration,
         isDragging: state.progress.isDragging,
-        draggingOffset: state.progress.draggingOffset
+        draggingOffset: state.progress.draggingOffset,
+        isInBg: !state.window.focused,
+        warning: state.window.warning,
     }
 }
 

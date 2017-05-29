@@ -4,6 +4,7 @@ const API_KEY = "AIzaSyAihlKnwXV_zqg7Sn2TBsZHKwPglURaqBA";
 const COMMENTS_URL = "https://www.googleapis.com/youtube/v3/commentThreads";
 const VIDEO_SEARCH_URL = "https://www.googleapis.com/youtube/v3/search";
 const VIDEO_INFO_URL = "https://www.googleapis.com/youtube/v3/videos"
+const IMAGE_SEARCH_URL = "https://www.googleapis.com/customsearch/v1";
 const JOE_ROGAN_ID = "UCzQUP1qoWDoEbmsQxvdjxgQ";
 
 const fetchComments = (videoId) => {
@@ -55,5 +56,12 @@ const searchVideoInfo = (videoId) => {
             console.error('error getting results for video', error);
         })
 }
+
+const searchImages = (query) => {
+    const request = `${IMAGE_SEARCH_URL}?key=${API_KEY}&searchType=image&cx=004385146662873052470:mlszdjnm_jm&q=${query}`;
+    return axios.get(request)
+        .then((responce) => responce.data.items.map((item)=>item.link))
+} 
+
 
 export { fetchComments, searchPodCast, searchVideoInfo };

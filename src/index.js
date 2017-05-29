@@ -25,7 +25,7 @@ if (prevState) {
 
 }
 const store = createStoreWithMiddleware(reducers, prevState);
-initListeners(document,store);
+initListeners(store);
 store.subscribe(() => {
   saveState(store.getState());
 });

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { initializeAudio, playAudio, pauseAudio, setAudioPosition } from '../actions'
+import { initializeAudio, playAudio, pauseAudio, setAudioPosition, playAudioFromBG, pauseAudioFromBG } from '../actions'
 import Timer from './timer';
 import ProgressBar from './progress-bar';
 
@@ -16,7 +16,6 @@ class Player extends Component {
 
     componentDidMount() {
         this.props.initializeAudio(this.audio)
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -27,11 +26,11 @@ class Player extends Component {
 
 
     onPlay() {
-        this.props.playAudio();
+        this.audio.play();
     }
 
     onPause() {
-        this.props.pauseAudio();
+        this.audio.pause();
     }
 
     onRewind() {
@@ -41,6 +40,15 @@ class Player extends Component {
     onForward() {
         this.props.setAudioPosition(this.props.audioPosition + TIME_DELTA);
     }
+
+    handleOnPlay() {
+        this.props.playAudio();
+    }
+
+    handleOnPause() {
+        this.props.pauseAudio();
+    }
+
 
     renderPlayPauseButton() {
         if (this.props.isPlaying) {
@@ -62,11 +70,16 @@ class Player extends Component {
 
     render() {
         const { src, audioPosition, duration, ready } = this.props;
+        console.log('IS IN BG? ', this.props.isInBG);
         return (
             <div >
+                <div className="player-wrapper" />
                 <div className={"player"}>
                     <ProgressBar />
-                    <audio src={this.props.audioSrc} ref={(audio) => { this.audio = audio }} />
+                    <audio src={this.props.audioSrc}
+                        ref={(audio) => { this.audio = audio }}
+                        onPlay={this.handleOnPlay.bind(this)}
+                        onPause={this.handleOnPause.bind(this)} />
                     {ready && this.renderButtons(duration, src, audioPosition)}
                 </div>
             </div>
@@ -96,7 +109,8 @@ const mapStateToProps = (state) => {
         draggingOffset: state.progress.draggingOffset,
         duration: state.audio.duration,
         ready: state.audio.ready,
-        audioSrc: state.audio.audioSrc
+        audioSrc: state.audio.audioSrc,
+        isInBG: !state.window.focused
     }
 }
 export default connect(mapStateToProps, { initializeAudio, playAudio, pauseAudio, setAudioPosition })(Player);

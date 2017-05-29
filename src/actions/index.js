@@ -2,6 +2,7 @@ import * as Types from './action-types';
 import * as Api from '../api';
 import { isMobile } from '../utils';
 import { searchPodCast, onSearchResultClicked, handleSearchAll, onSearchFocus, onSearchOnBlur, mouseLeft, mouseEntered } from './search';
+import * as window from './window';
 import { navigateTo } from './navigation';
 
 let audio;
@@ -36,10 +37,10 @@ const fetchComments = (videoId) => {
 const changeAudio = (searchResult) => {
     return (dispatch) => {
         const episodeNumber = searchResult.title.match(/\d+/)[0];
-        console.log('episodeNumber',episodeNumber);
+        console.log('episodeNumber', episodeNumber);
         dispatch({
-            type:Types.AUDIO_SRC_SET,
-            payload:"http://traffic.libsyn.com/joeroganexp/p" + episodeNumber + ".mp3"
+            type: Types.AUDIO_SRC_SET,
+            payload: "http://traffic.libsyn.com/joeroganexp/p" + episodeNumber + ".mp3"
         })
     }
 
@@ -57,7 +58,7 @@ const setAudioPosition = (position) => {
 }
 
 const initializeAudio = (audioElement) => {
-    console.log('initializeAudio',audioElement);
+    console.log('initializeAudio', audioElement);
     audio = audioElement;
     return (dispatch, getState) => {
         const prevPositon = getState().audio.position;
@@ -77,7 +78,6 @@ const initializeAudio = (audioElement) => {
 }
 
 const playAudio = () => {
-    audio.play();
     return (dispatch) => {
         tickInterval = setInterval(() => { tick(dispatch) }, 1000);
         dispatch({
@@ -87,8 +87,35 @@ const playAudio = () => {
     }
 }
 
+const playAudioFromBG = () => {
+    console.log('playAudioFromBG');
+    return (dispatch) => {
+        tickInterval = setInterval(() => { tick(dispatch) }, 1000);
+        dispatch({
+            type: Types.AUDIO_PLAY,
+            payload: audio
+        });
+
+    }
+}
+
+const pauseAudioFromBG = () => {
+    console.log('pauseAudioFromBG');
+    clearInterval(tickInterval);
+    return (dispatch) => {
+        dispatch({
+            type: Types.AUDIO_PAUSE,
+            payload: audio
+        });
+         dispatch({
+            type: Types.WARNING,
+            payload: "#fddaa"
+        });
+    }
+
+}
+
 const pauseAudio = () => {
-    audio.pause();
     clearInterval(tickInterval);
     return {
         type: Types.AUDIO_PAUSE,
@@ -133,4 +160,4 @@ const getXYPayload = (e) => {
     return { x: e.clientX, y: e.clientY };
 }
 
-export { Types, fetchComments, changeAudio, searchPodCast, onSearchResultClicked, handleSearchAll, initializeAudio, playAudio, pauseAudio, setAudioPosition, mouseMoving, onMouseUp, onScrubberDown,  onSearchFocus, onSearchOnBlur, mouseLeft, mouseEntered, navigateTo  }
+export { Types, fetchComments, changeAudio, searchPodCast, onSearchResultClicked, handleSearchAll, initializeAudio, playAudio, playAudioFromBG, pauseAudioFromBG, pauseAudio, setAudioPosition, mouseMoving, onMouseUp, onScrubberDown, onSearchFocus, onSearchOnBlur, mouseLeft, mouseEntered, navigateTo, window, audio }
