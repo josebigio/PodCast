@@ -1,14 +1,8 @@
 import * as Types from './action-types';
-import { audio, pauseAudioFromBG, playAudioFromBG } from './index';
+import { audio } from './index';
 
 export const onWindowFocused = () => {
     return (dispatch) => {
-        if (audio.paused) {
-            pauseAudioFromBG()(dispatch);
-        }
-        else {
-            playAudioFromBG()(dispatch);
-        }
         dispatch( {
             type: Types.ON_WINDOW_FOCUS
         });

@@ -15,10 +15,11 @@ class PodCast extends Component {
 
     render() {
         const {comments}  = this.props;
+        console.log('ISLOADING',this.props.isLoadingComments);
         return(
             <div>
                 <SearchBar/>
-                <CommentList comments={comments}/>
+                <CommentList comments={comments} isLoading={this.props.isLoadingComments}/>
                 <Player/>
             </div>
         );
@@ -27,7 +28,8 @@ class PodCast extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        comments: state.comments.comments
+        comments: state.comments.comments,
+        isLoadingComments: state.comments.isLoading,
     }
 }
 export default connect(mapStateToProps,{fetchComments,searchPodCast})(PodCast);

@@ -21,7 +21,7 @@ class Comment extends Component {
         const { comment, showReplies } = this.props;
         const { snippet, replies } = comment;
         const { likeCount, textDisplay, authorDisplayName } = snippet.topLevelComment.snippet;
-        return <li className="list-group-item clickable" onClick={this.handleClick.bind(this)}>
+        return <li className="list-group-item comment-list-group-item clickable" onClick={this.handleClick.bind(this)}>
             <h6>{authorDisplayName}</h6>
             <div dangerouslySetInnerHTML={{ __html: textDisplay }} />
             <CountIcon count={likeCount} color="#ffaaff" radius="30px" />

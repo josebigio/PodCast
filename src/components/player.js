@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { initializeAudio, playAudio, pauseAudio, setAudioPosition, playAudioFromBG, pauseAudioFromBG } from '../actions'
+import { initializeAudio, playAudio, pauseAudio, setAudioPosition } from '../actions'
 import Timer from './timer';
 import ProgressBar from './progress-bar';
 

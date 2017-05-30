@@ -18,7 +18,7 @@ $searchBarHeight:25vh;
     padding-bottom: $playerHeight;
     
 }
-.comment-list .list-group-item:first-child{
+.comment-list .comment-list-group-item:first-child{
     padding-top: $searchBarHeight + 2vh;
 }
 
@@ -87,9 +87,14 @@ $searchBarHeight:25vh;
 .comment-list-loader-parent {
     display:flex;
     justify-content: center;
-    height:90vh;
-    background-color:#ffaadd;
+    height:100vh;
+    width:100%;
     align-items: center;
+    position:absolute;
+    top:0px;
+    left:0px;
+    z-index:999;
+    pointer-events:none;
 }
 .timer{
     display:flex;

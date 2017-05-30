@@ -4,6 +4,7 @@ import { isMobile } from '../utils';
 import { searchPodCast, onSearchResultClicked, handleSearchAll, onSearchFocus, onSearchOnBlur, mouseLeft, mouseEntered } from './search';
 import * as window from './window';
 import { navigateTo } from './navigation';
+import * as storage from '../utils/local-storage';
 
 let audio;
 let tickInterval;
@@ -18,6 +19,10 @@ const tick = (dispatch) => {
 
 const fetchComments = (videoId) => {
     return (dispatch) => {
+        console.log('ACTION COMMENTS_FETCH_START');
+        dispatch({
+            type:Types.COMMENTS_FETCH_START
+        })
         Api.fetchComments(videoId)
             .then((comments) => {
                 dispatch({
@@ -36,12 +41,19 @@ const fetchComments = (videoId) => {
 
 const changeAudio = (searchResult) => {
     return (dispatch) => {
-        const episodeNumber = searchResult.title.match(/\d+/)[0];
-        console.log('episodeNumber', episodeNumber);
+        const episodeNumber = getEpisodeNumber(searchResult);
         dispatch({
             type: Types.AUDIO_SRC_SET,
             payload: "http://traffic.libsyn.com/joeroganexp/p" + episodeNumber + ".mp3"
-        })
+        });
+        const savedPC = storage.getSavedPodCast(searchResult.title);
+        if(savedPC) {
+            console.log('CHANGEAUDIO prev pos,',savedPC.position);
+            setAudioPosition(savedPC.position)(dispatch);
+        }
+        else {
+            console.log('CHANGEAUDIO, no prev found');
+        }
     }
 
 }
@@ -87,33 +99,7 @@ const playAudio = () => {
     }
 }
 
-const playAudioFromBG = () => {
-    console.log('playAudioFromBG');
-    return (dispatch) => {
-        tickInterval = setInterval(() => { tick(dispatch) }, 1000);
-        dispatch({
-            type: Types.AUDIO_PLAY,
-            payload: audio
-        });
 
-    }
-}
-
-const pauseAudioFromBG = () => {
-    console.log('pauseAudioFromBG');
-    clearInterval(tickInterval);
-    return (dispatch) => {
-        dispatch({
-            type: Types.AUDIO_PAUSE,
-            payload: audio
-        });
-         dispatch({
-            type: Types.WARNING,
-            payload: "#fddaa"
-        });
-    }
-
-}
 
 const pauseAudio = () => {
     clearInterval(tickInterval);
@@ -160,4 +146,7 @@ const getXYPayload = (e) => {
     return { x: e.clientX, y: e.clientY };
 }
 
-export { Types, fetchComments, changeAudio, searchPodCast, onSearchResultClicked, handleSearchAll, initializeAudio, playAudio, playAudioFromBG, pauseAudioFromBG, pauseAudio, setAudioPosition, mouseMoving, onMouseUp, onScrubberDown, onSearchFocus, onSearchOnBlur, mouseLeft, mouseEntered, navigateTo, window, audio }
+export const getEpisodeNumber = (searchResult) => searchResult.title.match(/\d+/)[0];
+
+
+export { Types, fetchComments, changeAudio, searchPodCast, onSearchResultClicked, handleSearchAll, initializeAudio, playAudio,  pauseAudio, setAudioPosition, mouseMoving, onMouseUp, onScrubberDown, onSearchFocus, onSearchOnBlur, mouseLeft, mouseEntered, navigateTo, window, audio }

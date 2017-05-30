@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import * as Types from './action-types';
 import * as Api from '../api';
-import { fetchComments, changeAudio } from './index';
+import * as storage from '../utils/local-storage';
+import { fetchComments, changeAudio, getEpisodeNumber } from './index';
 
 export const searchPodCast = (query, maxResults = 5) => {
     return (dispatch) => {
@@ -112,7 +113,11 @@ export const fetchRatings = (searchResult) => {
 }
 
 export const onSearchResultClicked = (searchResult) => {
-    return (dispatch) => {
+    return (dispatch,getState) => {
+        const lastAudioPos = getState().audio.position;
+        const prevEpisode = getState().search.currentEpisode;
+        storage.savePodcast(prevEpisode,lastAudioPos);
+        console.log('SAVING AUDIO POS',prevEpisode,lastAudioPos);
         dispatch({
             type: Types.SEARCH_RESULT_CLICKED,
             payload: searchResult,
