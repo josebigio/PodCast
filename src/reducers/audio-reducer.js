@@ -12,7 +12,7 @@ const initialState = {
 const AudioReducer = (state = initialState, action) => {
     switch (action.type) {
         case Types.AUDIO_INITIALIZED:
-            return {...state, duration:action.payload,ready:true}
+            return {...state, duration:action.payload.duration,position:action.payload.position,ready:true}
         case Types.AUDIO_PLAY:
            return {...state, isPlaying:true};
         case Types.AUDIO_PAUSE:

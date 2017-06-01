@@ -7,7 +7,7 @@ import { createLogger } from 'redux-logger';
 import App from './containers/app';
 import reducers from './reducers';
 import * as Api from './api';
-import { saveState, loadState } from './utils/local-storage';
+import { saveState, savePodcast, loadState } from './utils/local-storage';
 import { Types, onMouseUp, mouseMoving } from './actions'
 import { isMobile } from './utils';
 import { initListeners } from './utils/dom-listener';
@@ -28,6 +28,7 @@ const store = createStoreWithMiddleware(reducers, prevState);
 initListeners(store);
 store.subscribe(() => {
   saveState(store.getState());
+  savePodcast(store.getState());
 });
 
 ReactDOM.render(

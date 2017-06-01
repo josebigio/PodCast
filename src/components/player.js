@@ -20,6 +20,7 @@ class Player extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.props.audioSrc !== nextProps.audioSrc) {
+            console.log('initializing audio...');
             this.props.initializeAudio(this.audio)
         }
     }

@@ -15,7 +15,6 @@ class PodCast extends Component {
 
     render() {
         const {comments}  = this.props;
-        console.log('ISLOADING',this.props.isLoadingComments);
         return(
             <div>
                 <SearchBar/>

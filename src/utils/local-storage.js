@@ -25,12 +25,15 @@ export const saveState = (state) => {
     }
 }
 
-export const savePodcast = (podCastName, position) => {
+export const savePodcast = (state) => {
+    const position = state.audio.position;
+    if(position === 0) {
+        return;
+    }
+    const audioSrc = state.audio.audioSrc;
     const savedPC = getSavedPocastMap();
-    console.log('saving podcast',podCastName,position,savedPC);
-    savedPC[podCastName] = { position: position };
-    console.log('after',savedPC);
-     try {
+    savedPC[audioSrc] = { position: position };
+    try {
         const serializedPC = JSON.stringify(savedPC);
         localStorage.setItem(PODCAST_KEY, serializedPC);
     }
@@ -39,8 +42,9 @@ export const savePodcast = (podCastName, position) => {
     }
 }
 
-export const getSavedPodCast = (podCastName) => {
-    return getSavedPocastMap()[podCastName];
+export const getSavedPodCast = (state) => {
+    const audioSrc = state.audio.audioSrc;
+    return getSavedPocastMap()[audioSrc];
 }
 
 const getSavedPocastMap = () => {

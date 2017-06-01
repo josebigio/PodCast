@@ -114,10 +114,6 @@ export const fetchRatings = (searchResult) => {
 
 export const onSearchResultClicked = (searchResult) => {
     return (dispatch,getState) => {
-        const lastAudioPos = getState().audio.position;
-        const prevEpisode = getState().search.currentEpisode;
-        storage.savePodcast(prevEpisode,lastAudioPos);
-        console.log('SAVING AUDIO POS',prevEpisode,lastAudioPos);
         dispatch({
             type: Types.SEARCH_RESULT_CLICKED,
             payload: searchResult,

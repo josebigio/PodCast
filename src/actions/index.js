@@ -46,22 +46,18 @@ const changeAudio = (searchResult) => {
             type: Types.AUDIO_SRC_SET,
             payload: "http://traffic.libsyn.com/joeroganexp/p" + episodeNumber + ".mp3"
         });
-        const savedPC = storage.getSavedPodCast(searchResult.title);
-        if(savedPC) {
-            console.log('CHANGEAUDIO prev pos,',savedPC.position);
-            setAudioPosition(savedPC.position)(dispatch);
-        }
-        else {
-            console.log('CHANGEAUDIO, no prev found');
-        }
     }
 
 }
 
 
-const setAudioPosition = (position) => {
+const setAudioPosition = (position, cap=true) => {
+    console.log('setAudioPosition',cap);
     return (dispatch) => {
-        audio.currentTime = Math.min(Math.max(position, 0), audio.duration);
+        const newPos = cap ? Math.min(Math.max(position, 0), audio.duration) :
+            position;
+            console.log('result of changing audio',newPos);
+            audio.currentTime = newPos;
         dispatch({
             type: Types.AUDIO_DURATION_SET,
             payload: audio.currentTime
@@ -73,16 +69,18 @@ const initializeAudio = (audioElement) => {
     console.log('initializeAudio', audioElement);
     audio = audioElement;
     return (dispatch, getState) => {
-        const prevPositon = getState().audio.position;
-        console.log('prevPosition', prevPositon);
+        const  savedPC = storage.getSavedPodCast(getState());
+        console.log('savedPC',savedPC);
+        const prevPosition = savedPC ? savedPC.position : 0;
+        console.log('prevPosition', prevPosition);
         let initialized = false;
         audio.oncanplay = () => {
             if (!initialized) {
                 initialized = true;
-                audio.currentTime = prevPositon;
+                audio.currentTime = prevPosition;
                 dispatch({
                     type: Types.AUDIO_INITIALIZED,
-                    payload: audio.duration
+                    payload: {duration: audio.duration, position: audio.currentTime}
                 })
             }
         }
