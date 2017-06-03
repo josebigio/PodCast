@@ -5,6 +5,7 @@ import WindowReducer from './window-reducer';
 import ProgressReducer from './progress-reducer';
 import SearchReducer from './search-reducer';
 import NavigationReducer from './navigation-reducer';
+import CurrentEpisodeReducer from './current-episode-reducer';
 
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   progress:ProgressReducer,
   search:SearchReducer,
   navigation:NavigationReducer,
+  currentEpisode:CurrentEpisodeReducer,
 });
 
 export default rootReducer;

@@ -1,7 +1,7 @@
 import * as Types from './action-types';
 import * as Api from '../api';
 import { isMobile } from '../utils';
-import { searchPodCast, onSearchResultClicked, handleSearchAll, onSearchFocus, onSearchOnBlur, mouseLeft, mouseEntered } from './search';
+import { searchPodCast, onSearchResultClicked, fetchRatings, handleSearchAll, onSearchFocus, onSearchOnBlur, mouseLeft, mouseEntered } from './search';
 import * as window from './window';
 import { navigateTo } from './navigation';
 import * as storage from '../utils/local-storage';
@@ -21,7 +21,7 @@ const fetchComments = (videoId) => {
     return (dispatch) => {
         console.log('ACTION COMMENTS_FETCH_START');
         dispatch({
-            type:Types.COMMENTS_FETCH_START
+            type: Types.COMMENTS_FETCH_START
         })
         Api.fetchComments(videoId)
             .then((comments) => {
@@ -51,13 +51,13 @@ const changeAudio = (searchResult) => {
 }
 
 
-const setAudioPosition = (position, cap=true) => {
-    console.log('setAudioPosition',cap);
+const setAudioPosition = (position, cap = true) => {
+    console.log('setAudioPosition', cap);
     return (dispatch) => {
         const newPos = cap ? Math.min(Math.max(position, 0), audio.duration) :
             position;
-            console.log('result of changing audio',newPos);
-            audio.currentTime = newPos;
+        console.log('result of changing audio', newPos);
+        audio.currentTime = newPos;
         dispatch({
             type: Types.AUDIO_DURATION_SET,
             payload: audio.currentTime
@@ -69,8 +69,8 @@ const initializeAudio = (audioElement) => {
     console.log('initializeAudio', audioElement);
     audio = audioElement;
     return (dispatch, getState) => {
-        const  savedPC = storage.getSavedPodCast(getState());
-        console.log('savedPC',savedPC);
+        const savedPC = storage.getSavedPodCast(getState());
+        console.log('savedPC', savedPC);
         const prevPosition = savedPC ? savedPC.position : 0;
         console.log('prevPosition', prevPosition);
         let initialized = false;
@@ -80,7 +80,7 @@ const initializeAudio = (audioElement) => {
                 audio.currentTime = prevPosition;
                 dispatch({
                     type: Types.AUDIO_INITIALIZED,
-                    payload: {duration: audio.duration, position: audio.currentTime}
+                    payload: { duration: audio.duration, position: audio.currentTime }
                 })
             }
         }
@@ -144,7 +144,25 @@ const getXYPayload = (e) => {
     return { x: e.clientX, y: e.clientY };
 }
 
+export const displayLatest = () => {
+    return (dispatch) => {
+        Api.searchPodCast("Joe Rogan Experience", 5)
+            .then((result) => {
+                console.log('DISPLAY LATEST',result);
+                if(result.length > 0) {
+                    const searchResult = result[0];
+                    onSearchResultClicked(searchResult)(dispatch);
+                }
+            })
+            .catch((error) => {
+                console.error('FAILED TO DISPLAY LATEST',error);
+            })
+       
+    }
+
+}
+
 export const getEpisodeNumber = (searchResult) => searchResult.title.match(/\d+/)[0];
 
 
-export { Types, fetchComments, changeAudio, searchPodCast, onSearchResultClicked, handleSearchAll, initializeAudio, playAudio,  pauseAudio, setAudioPosition, mouseMoving, onMouseUp, onScrubberDown, onSearchFocus, onSearchOnBlur, mouseLeft, mouseEntered, navigateTo, window, audio }
+export { Types, fetchComments, changeAudio, searchPodCast, onSearchResultClicked, handleSearchAll, initializeAudio, playAudio, pauseAudio, setAudioPosition, mouseMoving, onMouseUp, onScrubberDown, onSearchFocus, onSearchOnBlur, mouseLeft, mouseEntered, navigateTo, window, audio }
