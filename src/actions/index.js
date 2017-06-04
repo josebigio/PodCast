@@ -35,7 +35,7 @@ const fetchComments = (videoId) => {
                     type: Types.COMMENTS_RECIEVED_FAILURE,
                     payload: error
                 });
-                showError(error);
+                dispatch(showError(error));
             });
     }
 }
@@ -170,7 +170,7 @@ export const displayLatest = () => {
             })
             .catch((error) => {
                 console.error('FAILED TO DISPLAY LATEST',error);
-                showError(error);
+                dispatch(showError(error));
             })
        
     }
