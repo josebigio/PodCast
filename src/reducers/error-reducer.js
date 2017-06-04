@@ -1,16 +1,16 @@
 import {Types} from '../actions';
 
 const initialState = {
-  error:undefined
+  error:undefined,
+  retryList:[],
 }
 
 const ErrorReducer = (state = initialState ,action) =>{
-    console.log('error reducer',action,state);
     switch(action.type) {
-        case Types.ERROR:
-            return {...state,error:action.payload}
-        case Types.ERROR_CLEAR:
-            return {...state,error:""}
+        case Types.RETRY_ERROR:
+            return {...state,retryList:state.retryList.concat(action.payload.retry), error:action.payload.error}
+        case Types.RETRY_ERROR_CLEAR:
+            return {...state,error:"", retryList:[]}
         default:
             return state;
     }

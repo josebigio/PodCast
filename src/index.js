@@ -15,9 +15,13 @@ import '../style/index.scss';
 
 
 const logger = createLogger({
-  predicate: (getState, action) => (action.type !== Types.TICK && action.type !==Types.MOUSE_MOVE)
+  predicate: (getState, action) => (action.type !== Types.TICK &&
+    action.type !== Types.MOUSE_MOVE &&
+    action.type !== Types.MOUSE_UP &&
+    action.type !== Types.ON_WINDOW_BLUR &&
+    action.type !== Types.ON_WINDOW_FOCUS)
 });
-const createStoreWithMiddleware = applyMiddleware( thunk)(createStore);
+const createStoreWithMiddleware = applyMiddleware(logger, thunk)(createStore);
 const prevState = loadState();
 let store;
 if (prevState) {

@@ -71,7 +71,6 @@ class Player extends Component {
 
     render() {
         const { src, audioPosition, duration, ready } = this.props;
-        console.log('IS IN BG? ', this.props.isInBG);
         return (
             <div >
                 <div className="player-wrapper" />

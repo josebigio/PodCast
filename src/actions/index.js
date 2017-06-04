@@ -31,26 +31,26 @@ const fetchComments = (videoId) => {
                 });
             })
             .catch((error) => {
-                dispatch({
-                    type: Types.COMMENTS_RECIEVED_FAILURE,
-                    payload: error
-                });
-                dispatch(showError(error));
+                dispatch(showError("There was an error getting comments for this video",() => fetchComments(videoId)(dispatch)));
             });
     }
 }
 
-export const showError = (error) =>{
-    console.log('SHOW ERROR',error);
-    return({
-        type:Types.ERROR,
-        payload:error,
+export const showError = (error, retryAction) => {
+    return ({
+        type: Types.RETRY_ERROR,
+        payload: {
+            error: error,
+            retry: retryAction
+        }
     })
 }
 
-export const hideError = (error) =>{
-    return({
-        type:Types.ERROR_CLEAR
+
+
+export const hideError = (error) => {
+    return ({
+        type: Types.RETRY_ERROR_CLEAR
     })
 }
 
@@ -163,17 +163,16 @@ export const displayLatest = () => {
     return (dispatch) => {
         Api.searchPodCast("Joe Rogan Experience", 5)
             .then((result) => {
-                console.log('DISPLAY LATEST',result);
-                if(result.length > 0) {
+                console.log('DISPLAY LATEST', result);
+                if (result.length > 0) {
                     const searchResult = result[0];
                     onSearchResultClicked(searchResult)(dispatch);
                 }
             })
             .catch((error) => {
-                console.error('FAILED TO DISPLAY LATEST',error);
-                dispatch(showError(error));
+                dispatch(showError("There was an error getting the data for the latest podcast",() => displayLatest()(dispatch)));
             })
-       
+
     }
 
 }

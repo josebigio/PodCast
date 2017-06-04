@@ -14,10 +14,8 @@ const WindowReducer = (state = initialState ,action) =>{
         case Types.MOUSE_MOVE:
             return {...state, mousePosition:action.payload }
         case Types.ON_WINDOW_BLUR:
-            console.log('JOSE ON_WINDOW_BLUR');
             return {...state,focused:false}
         case Types.ON_WINDOW_FOCUS: 
-            console.log('JOSE ON_WINDOW_FOCUS');
             return {...state, focused:true}
         case Types.WARNING:
             return {...state, warning:true}
