@@ -35,10 +35,7 @@ const searchPodCast = (query, maxResults = 5)=> {
 
             }));
 
-        }).
-        catch((error) => {
-            console.error('error getting results for video', error);
-        })
+        });
 }
 
 const searchVideoInfo = (videoId) => {
@@ -51,10 +48,7 @@ const searchVideoInfo = (videoId) => {
             else {
                 throw 'no data found';
             }
-        }).
-        catch((error) => {
-            console.error('error getting results for video', error);
-        })
+        });
 }
 
 const searchImages = (query) => {

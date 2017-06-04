@@ -2,7 +2,7 @@ import _ from 'lodash';
 import * as Types from './action-types';
 import * as Api from '../api';
 import * as storage from '../utils/local-storage';
-import { fetchComments, changeAudio, getEpisodeNumber } from './index';
+import { fetchComments, changeAudio, getEpisodeNumber, showError } from './index';
 
 export const searchPodCast = (query, maxResults = 5) => {
     return (dispatch) => {
