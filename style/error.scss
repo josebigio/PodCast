@@ -1,0 +1,32 @@
+.error-dialog {  
+    background-color:#fff;
+    pointer-events: all;
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    justify-content: stretch;
+}
+.error-dialog div {
+    padding:10px;
+    border: ridge rgba(0,0,0,0.30) 1px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-ok {
+    cursor: pointer;
+}
+
+.error-dialog-wrapper {
+    position: absolute;
+    z-index:9999;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    top:0;
+    left:0;
+    height: 100%;
+    width:100%;
+    pointer-events:none;
+}

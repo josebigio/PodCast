@@ -30,6 +30,7 @@ export const searchPodCast = (query, maxResults = 5) => {
                         type: Types.PODCAST_SEARCH_RECIEVED_FAILURE,
                         payload: error
                     });
+                    showError(error);
                 });
         }, 300)(query,maxResults);
 
@@ -86,6 +87,7 @@ export const handleSearchAll = () => {
                     type: Types.PODCAST_SEARCH_RECIEVED_FAILURE,
                     payload: error
                 });
+                showError(error);
             });
 
 
@@ -106,6 +108,7 @@ export const fetchRatings = (searchResult) => {
                     type: Types.PODCAST_RATINGS_ERROR,
                     payload: error
                 });
+                showError(error);
             });
 
 

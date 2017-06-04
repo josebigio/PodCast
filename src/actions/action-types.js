@@ -25,5 +25,8 @@ export const NAVIGATION_CHANGED = "NAVIGATION_CHANGED";
 export const ON_WINDOW_BLUR = "ON_WINDOW_BLUR";
 export const ON_WINDOW_FOCUS = "ON_WINDOW_FOCUS";
 export const WARNING = "WARNING";
+export const ERROR = "ERROR";
+export const ERROR_CLEAR = "ERROR_CLEAR";
+
 
 

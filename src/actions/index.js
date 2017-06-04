@@ -35,8 +35,22 @@ const fetchComments = (videoId) => {
                     type: Types.COMMENTS_RECIEVED_FAILURE,
                     payload: error
                 });
+                showError(error);
             });
     }
+}
+
+export const showError = (error) =>{
+    return({
+        type:Types.ERROR,
+        payload:error,
+    })
+}
+
+export const hideError = (error) =>{
+    return({
+        type:Types.ERROR_CLEAR
+    })
 }
 
 const changeAudio = (searchResult) => {
@@ -156,6 +170,7 @@ export const displayLatest = () => {
             })
             .catch((error) => {
                 console.error('FAILED TO DISPLAY LATEST',error);
+                showError(error);
             })
        
     }
