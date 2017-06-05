@@ -90,6 +90,7 @@ const initializeAudio = (audioElement) => {
         console.log('prevPosition', prevPosition);
         let initialized = false;
         audio.oncanplay = () => {
+            console.log('audio can play',initialized);
             if (!initialized) {
                 initialized = true;
                 audio.currentTime = prevPosition;
@@ -104,7 +105,9 @@ const initializeAudio = (audioElement) => {
             dispatch(showError("There was an error with the audio",() => {
                 console.log('audio error reloading');
                 audio.src = getState().audio.audioSrc;
-                audio.load}));
+                audio.load;
+                initialized = false;
+            }));
         }
     }
 }
