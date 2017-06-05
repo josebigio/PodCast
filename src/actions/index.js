@@ -99,6 +99,13 @@ const initializeAudio = (audioElement) => {
                 })
             }
         }
+        audio.onerror = (e) => {
+            console.log('AUDIO ON ERROR',e)
+            dispatch(showError("There was an error with the audio",() => {
+                console.log('audio error reloading');
+                audio.src = getState().audio.audioSrc;
+                audio.load}));
+        }
     }
 }
 
